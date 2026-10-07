@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Makes an ASP.NET Core Identity app auth.md-compliant so AI agents can register and authenticate on behalf of its users.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.12" />
+    <PackageReference Include="OpenIddict.AspNetCore" Version="7.7.1" />
+    <PackageReference Include="OpenIddict.EntityFrameworkCore" Version="7.7.1" />
+  </ItemGroup>
+
+</Project>

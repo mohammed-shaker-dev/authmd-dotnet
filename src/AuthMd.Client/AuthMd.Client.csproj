@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Agent-side SDK for the auth.md protocol: discovery, the service_auth Claim Ceremony, and token exchange.</Description>
+  </PropertyGroup>
+
+</Project>

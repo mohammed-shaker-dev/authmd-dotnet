@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] · Sample Notes</title>
+    <style>
+        body { font: 16px/1.5 system-ui, sans-serif; color: #1c1c1c; background: #f6f6f4; margin: 0; }
+        header, main { max-width: 36rem; margin: 0 auto; padding: 1rem 1.25rem; }
+        header { display: flex; justify-content: space-between; align-items: baseline; }
+        header a { color: inherit; font-weight: 600; text-decoration: none; }
+        header form { display: inline; }
+        main { background: #fff; border: 1px solid #deded9; border-radius: 8px; padding: 1.5rem; }
+        h1 { font-size: 1.4rem; margin-top: 0; }
+        label { display: block; font-weight: 600; margin-top: 1rem; }
+        input { font: inherit; padding: .5rem .6rem; border: 1px solid #b9b9b3; border-radius: 6px; width: 100%; box-sizing: border-box; }
+        input.code { font-size: 1.6rem; letter-spacing: .4rem; text-align: center; max-width: 12rem; }
+        button { font: inherit; font-weight: 600; margin-top: 1rem; padding: .5rem 1rem; border: 0; border-radius: 6px; background: #1f4fd8; color: #fff; cursor: pointer; }
+        button.link { background: none; color: #1f4fd8; padding: 0; margin: 0; font-weight: 400; }
+        code { background: #eeeeea; padding: .1rem .3rem; border-radius: 4px; }
+        .error { color: #b3261e; }
+        .ok { color: #17663a; font-weight: 600; }
+        .muted { color: #5f5f5a; }
+        ul.scopes { padding-left: 1.2rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="/">Sample Notes</a>
+        @if (User.Identity?.IsAuthenticated == true)
+        {
+            <span class="muted">
+                @User.Identity.Name ·
+                <form method="post" action="/Account/Logout"><button class="link" type="submit">Sign out</button>@Html.AntiForgeryToken()</form>
+            </span>
+        }
+    </header>
+    <main>
+        @RenderBody()
+    </main>
+</body>
+</html>

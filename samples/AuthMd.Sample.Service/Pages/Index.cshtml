@@ -1,0 +1,27 @@
+@page
+@using AuthMd.Sample.Service
+@{
+    ViewData["Title"] = "Home";
+}
+
+<h1>Sample Notes</h1>
+<p>
+    An ordinary ASP.NET Core Identity app that AI agents can register with on behalf of its users,
+    through the <a href="/auth.md">auth.md</a> protocol.
+</p>
+
+<h2>Try it</h2>
+<ol>
+    <li>Leave this app running.</li>
+    <li>In another terminal, start the agent: <code>dotnet run --project samples/AuthMd.Sample.Agent</code></li>
+    <li>The agent prints a link and a 6-digit code. Open the link.</li>
+    <li>Sign in as <code>@DemoUser.Email</code> with password <code>@DemoUser.Password</code>.</li>
+    <li>Type the code and approve. The agent picks up from there.</li>
+</ol>
+
+<h2>What agents read</h2>
+<ul>
+    <li><a href="/auth.md">/auth.md</a>: the instructions</li>
+    <li><a href="/.well-known/oauth-protected-resource">/.well-known/oauth-protected-resource</a></li>
+    <li><a href="/.well-known/oauth-authorization-server">/.well-known/oauth-authorization-server</a></li>
+</ul>

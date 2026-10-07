@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/samples/">
+    <Project Path="samples/AuthMd.Sample.Agent/AuthMd.Sample.Agent.csproj" />
+    <Project Path="samples/AuthMd.Sample.Service/AuthMd.Sample.Service.csproj" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/AuthMd.AspNetCore/AuthMd.AspNetCore.csproj" />
+    <Project Path="src/AuthMd.Client/AuthMd.Client.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/AuthMd.TestHost/AuthMd.TestHost.csproj" />
+    <Project Path="tests/AuthMd.Tests/AuthMd.Tests.csproj" />
+  </Folder>
+</Solution>

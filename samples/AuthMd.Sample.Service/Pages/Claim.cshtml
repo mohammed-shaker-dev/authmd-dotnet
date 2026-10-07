@@ -1,0 +1,96 @@
+@page "/claim"
+@model ClaimModel
+@{
+    ViewData["Title"] = "Approve an agent";
+}
+
+<h1>Approve an agent</h1>
+<p>You're signed in as <strong>@User.Identity!.Name</strong>.</p>
+
+<div id="loading" class="muted">Looking up the request…</div>
+
+<div id="request" hidden>
+    <p>An AI agent is asking to act on your behalf in Sample Notes. It will be able to:</p>
+    <ul id="scopes" class="scopes"></ul>
+    <form id="confirm">
+        <label for="code">Enter the 6-digit code the agent showed you</label>
+        <input id="code" class="code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" required autofocus />
+        <p id="problem" class="error" hidden></p>
+        <button type="submit">Approve</button>
+    </form>
+    <p class="muted">Only approve if you started this yourself. The code came from the agent, not from us.</p>
+</div>
+
+<p id="done" class="ok" hidden>Approved. You can close this tab and go back to your agent.</p>
+<p id="unavailable" class="error" hidden></p>
+
+<script>
+    // The page contract, in full:
+    //   GET  /agent/identity/claim/view?claim_attempt_token=…   → what is being asked
+    //   POST /agent/identity/claim/confirm  { claim_attempt_token, user_code }   → approve
+    // Both need the signed-in user's cookie, which the browser sends because this page is same-origin.
+    const token = new URLSearchParams(location.search).get('claim_attempt_token') ?? '';
+    const show = id => document.getElementById(id).hidden = false;
+    const hide = id => document.getElementById(id).hidden = true;
+
+    const scopeNames = {
+        'notes.read': 'Read your notes',
+        'notes.write': 'Add notes',
+    };
+
+    const reasons = {
+        invalid_claim_token: 'This link is not valid. Ask your agent for a new one.',
+        access_denied: 'This request was made for a different account. Sign in as that user.',
+        claim_expired: 'This request has expired. Ask your agent to start again.',
+        claimed_or_in_flight: 'This request has already been approved.',
+        login_required: 'Your session ended. Reload the page to sign in again.',
+        invalid_request: 'That code is not right. Check it and try again.',
+    };
+
+    function fail(error) {
+        hide('loading');
+        hide('request');
+        const box = document.getElementById('unavailable');
+        box.textContent = reasons[error] ?? 'Something went wrong. Ask your agent to start again.';
+        box.hidden = false;
+    }
+
+    async function load() {
+        const response = await fetch('/agent/identity/claim/view?claim_attempt_token=' + encodeURIComponent(token));
+        const body = await response.json();
+        if (!response.ok) return fail(body.error);
+        if (body.status === 'claimed') return fail('claimed_or_in_flight');
+        if (body.status === 'expired') return fail('claim_expired');
+
+        const list = document.getElementById('scopes');
+        for (const scope of body.scopes) {
+            const item = document.createElement('li');
+            item.textContent = scopeNames[scope] ?? scope;
+            list.appendChild(item);
+        }
+        hide('loading');
+        show('request');
+    }
+
+    document.getElementById('confirm').addEventListener('submit', async event => {
+        event.preventDefault();
+        hide('problem');
+        const response = await fetch('/agent/identity/claim/confirm', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ claim_attempt_token: token, user_code: document.getElementById('code').value }),
+        });
+        if (response.ok) {
+            hide('request');
+            return show('done');
+        }
+
+        const body = await response.json();
+        if (body.error !== 'invalid_request') return fail(body.error);
+        const problem = document.getElementById('problem');
+        problem.textContent = reasons.invalid_request;
+        problem.hidden = false;
+    });
+
+    load().catch(() => fail());
+</script>
