@@ -107,7 +107,15 @@ Adding a note ...
 Done. Access token revoked; the registration stays until the user or the service revokes it.
 ```
 
-The sample keeps everything in memory, so restarting the service wipes its users' registrations and tokens.
+To see an agent register for someone who has no account yet, pass a different email:
+
+```bash
+dotnet run --project samples/AuthMd.Sample.Agent -- http://localhost:5125/ you@example.com
+```
+
+Open the link, choose **Create one** on the sign-in page, sign up with that same email, and you land on the approval page. Only the person signed in with the email the agent named can approve.
+
+The sample keeps everything in memory, so restarting the service wipes its users, registrations and tokens.
 
 ## Quickstart: make your app an auth.md service
 

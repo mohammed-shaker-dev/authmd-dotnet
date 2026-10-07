@@ -18,6 +18,11 @@
     <li>Sign in as <code>@DemoUser.Email</code> with password <code>@DemoUser.Password</code>.</li>
     <li>Type the code and approve. The agent picks up from there.</li>
 </ol>
+<p>
+    To try it as someone with no account, give the agent another email:
+    <code>dotnet run --project samples/AuthMd.Sample.Agent -- http://localhost:5125/ you@example.com</code>.
+    Then choose <a href="/Account/Register">Create one</a> on the sign-in page and sign up with that email.
+</p>
 
 <h2>What agents read</h2>
 <ul>

@@ -68,5 +68,5 @@ so the term is fixed.
 
 ## Related
 
-- Decisions are recorded in [docs/adr/](docs/adr/).
-- The v1 feature spec is in [docs/specs/](docs/specs/).
+- Decisions are recorded in `docs/adr/` and the v1 feature spec in `docs/specs/`.
+  Both are working documents kept alongside the code locally; they are not published in this repository.

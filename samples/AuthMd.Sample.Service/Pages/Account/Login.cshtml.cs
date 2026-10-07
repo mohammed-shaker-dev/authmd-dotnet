@@ -15,9 +15,12 @@ public class LoginModel(SignInManager<IdentityUser> signIn) : PageModel
     [BindProperty]
     public string Password { get; set; } = string.Empty;
 
+    [BindProperty(SupportsGet = true)]
+    public string? ReturnUrl { get; set; }
+
     public bool Failed { get; private set; }
 
-    public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
+    public async Task<IActionResult> OnPostAsync()
     {
         var result = await signIn.PasswordSignInAsync(Email, Password, isPersistent: false, lockoutOnFailure: true);
         if (!result.Succeeded)
@@ -26,6 +29,6 @@ public class LoginModel(SignInManager<IdentityUser> signIn) : PageModel
             return Page();
         }
 
-        return LocalRedirect(Url.IsLocalUrl(returnUrl) ? returnUrl : "/");
+        return LocalRedirect(Url.IsLocalUrl(ReturnUrl) ? ReturnUrl : "/");
     }
 }
