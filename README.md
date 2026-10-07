@@ -283,7 +283,7 @@ dotnet pack --configuration Release --output artifacts
 
 The tests drive both packages over HTTP through `WebApplicationFactory`, against an Identity test host on in-memory SQLite. The headline test, `Agent_registers_on_behalf_of_a_user_and_calls_the_protected_api`, runs the whole ceremony with `AuthMd.Client` on one side and `AuthMd.AspNetCore` on the other.
 
-Vocabulary is fixed in [CONTEXT.md](CONTEXT.md); design decisions are recorded in [docs/adr/](docs/adr/).
+Vocabulary is fixed in [CONTEXT.md](CONTEXT.md).
 
 ## License
 

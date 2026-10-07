@@ -480,3 +480,7 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+# Private working docs (kept local, not published)
+/docs/
+/.scratch/
